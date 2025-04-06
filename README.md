@@ -1,4 +1,4 @@
-# 🎮 Tic Tac Toe - AI vs You
+# 🎮 Tic Tac Toe - AI vs You (or a Friend!)
 
 A fun and interactive **Tic Tac Toe** game built with 💖 using **HTML, CSS, and JavaScript** during my high school days (Class 12, 2023). This project started as a passion for learning how games work, and turned into a fully functional AI-based game with a beautiful UI — all made from scratch with the help of books 📚, online resources 🌐, and lots of trial and error.
 
@@ -9,7 +9,7 @@ Now it lives here on GitHub for everyone to enjoy and learn from!
 - ✨ Clean and modern UI with gradient background
 - 🧠 AI that plays against you (never lets you win easily 😏)
 - 🔁 Reset button to play again anytime
-- 👥 Option to switch to two-player mode
+- 👥 **Two Player Mode** – play with a friend on the same device!
 - 🧠 Turn-based logic with win detection and messaging
 - 🔷 Fully responsive and works smoothly in the browser
 
@@ -17,10 +17,10 @@ Now it lives here on GitHub for everyone to enjoy and learn from!
 
 1. Start the game — it’s your move first!
 2. Choose a cell to place your `X`.
-3. The AI responds with its `O`.
+3. The AI (or your friend) makes the next move.
 4. Keep playing until someone wins or it’s a draw.
 5. Hit **Restart Game** to play again.
-6. You can also switch to **Two Player Mode** at the top right!
+6. Tap the **Switch to Two Player** button at the top right to challenge a friend locally.
 
 ## 🧠 AI Logic
 
