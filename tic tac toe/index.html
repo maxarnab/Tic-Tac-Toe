@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://wpengine.com/builders/wp-content/uploads/wordpress-default-gradients.jpg'); /* Replace with your image URL */
+            background-size: cover;
+        }
+       
+
+         
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 5px;
+            background: linear-gradient(to bottom right, rgba(52, 152, 219, 0.7), rgba(46, 204, 113, 0.7));
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .cell:hover {
+            background-color: #f2f2f2;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c; /* Red color for better visibility */
+            background: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        #restart {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            
+        }
+
+        #restart:hover {
+            background-color: #27ae60;
+        }
+
+        .you {
+            color: #3498db; /* Blue color for 'You' */
+        }
+
+        .ai {
+            color: #e74c3c; /* Red color for 'Ai' */
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h1 style="color: rgb(2, 2, 180);">Tic Toc Toe</h1>
+        <h5 style="color: rgb(254, 251, 251);">with❤️by Arnab Saha</h>
+<body>
+    <div id="board"></div>
+    <div id="status"></div>
+    <button id="restart" onclick="restartGame()">Restart Game</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const board = document.getElementById('board');
+            const status = document.getElementById('status');
+            const restartButton = document.getElementById('restart');
+            const cells = Array.from({ length: 9 });
+
+            let currentPlayer = 'X';
+            let winner = null;
+            let gameActive = true;
+
+            // Initialize the board
+            cells.forEach((_, index) => {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.dataset.index = index;
+                cell.addEventListener('click', () => handleCellClick(index));
+                board.appendChild(cell);
+                cells[index] = cell;
+            });
+
+            function handleCellClick(index) {
+                if (!gameActive || cells[index].textContent !== '') return;
+
+                cells[index].textContent = currentPlayer;
+                if (checkWinner()) {
+                    winner = currentPlayer;
+                    displayResult();
+                    gameActive = false;
+                } else if (cells.every(cell => cell.textContent !== '')) {
+                    status.textContent = 'It\'s a draw!';
+                    gameActive = false;
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    displayStatus();
+                    if (currentPlayer === 'O' && gameActive) {
+                        setTimeout(makeAiMove, 500); // Delay for better user experience
+                    }
+                }
+            }
+
+            function makeAiMove() {
+                if (!gameActive) return;
+
+                const emptyCells = cells.filter(cell => cell.textContent === '');
+                if (emptyCells.length === 0) return;
+
+                const randomIndex = Math.floor(Math.random() * emptyCells.length);
+                const aiMove = emptyCells[randomIndex].dataset.index;
+                handleCellClick(aiMove);
+            }
+
+            function checkWinner() {
+                const winPatterns = [
+                    [0, 1, 2],
+                    [3, 4, 5],
+                    [6, 7, 8],
+                    [0, 3, 6],
+                    [1, 4, 7],
+                    [2, 5, 8],
+                    [0, 4, 8],
+                    [2, 4, 6]
+                ];
+
+                return winPatterns.some(pattern => {
+                    const [a, b, c] = pattern;
+                    return cells[a].textContent !== '' &&
+                           cells[a].textContent === cells[b].textContent &&
+                           cells[b].textContent === cells[c].textContent;
+                });
+            }
+
+            function displayStatus() {
+                status.textContent = `${currentPlayer}'s turn`;
+            }
+
+            function displayResult() {
+                if (winner === 'X') {
+                    status.innerHTML = '<span class="you">You</span> win!';
+                } else if (winner === 'O') {
+                    status.innerHTML = '<span class="ai">Ai</span> wins!';
+                }
+            }
+
+            function restartGame() {
+                cells.forEach(cell => {
+                    cell.textContent = '';
+                });
+
+                currentPlayer = 'X';
+                winner = null;
+                gameActive = true;
+
+                displayStatus();
+            }
+
+            restartButton.addEventListener('click', restartGame);
+        });
+    </script>
+</body>
+</html>
